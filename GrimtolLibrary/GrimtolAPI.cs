@@ -15,6 +15,8 @@ namespace GrimtolLibrary
             Console.WriteLine(roomFactory.CurrentRoom.Description);
             Console.WriteLine(roomFactory.CurrentRoom.Exits);
             
+            ProcessCommand(Console.ReadLine());
+            
         }
 
         public void ProcessCommand(string command)
@@ -22,6 +24,7 @@ namespace GrimtolLibrary
             switch (command)
             {
                 case "move":
+                    
                     
                 case "look":
                     
