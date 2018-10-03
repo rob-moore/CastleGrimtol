@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace GrimtolLibrary.Models
 {
@@ -6,16 +7,26 @@ namespace GrimtolLibrary.Models
     {
         
         internal Room CurrentRoom { get; set; }
-        internal Player CurrentPlayer { get; set; }
+
+        internal void GetCurrentRoom()
+        {
+            Console.WriteLine(CurrentRoom.Name);
+            Console.WriteLine(CurrentRoom.Description);
+            Console.WriteLine(CurrentRoom.RoomExits);
+        }
         
         internal string Move(string direction)
         {
-            if (CurrentRoom.RoomExits.Keys.ToString().ToLower() == direction)
+            Enum.TryParse(direction, true, out Exits exit);
+            if (CurrentRoom.RoomExits.ContainsKey(exit))
             {
-                return $"moving to {CurrentRoom.RoomExits.Keys}";
+                var newRoom = CurrentRoom.RoomExits[exit];
+                CurrentRoom = newRoom; 
+                GetCurrentRoom();
+                return "moved";
             }
 
-            return "butts";
+            return "invalid direction";
         }
 
         internal string Look()
