@@ -1,8 +1,17 @@
+
 namespace GrimtolLibrary.Models
 {
-    public class Item
+    internal class Item
     {
-        private string Name { get; set; }
-        private string Description { get; set; }
+        internal string Name { get; set; }
+        internal string Description { get; set; }
+
+        internal Item(string name, string desc)
+        {
+            Name = name;
+            Description = desc;
+        }
+        
+        
     }
 }

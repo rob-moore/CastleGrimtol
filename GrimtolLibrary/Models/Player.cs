@@ -4,9 +4,9 @@ namespace GrimtolLibrary.Models
 {
     public class Player
     {
-        private string Name { get; set; }
-        private int Health { get; set; }
-        private List<string> Inventory { get; set; }
+        public string Name { get; set; }
+        public int Health { get; set; }
+        public List<string> Inventory { get; set; }
         
     }
 }

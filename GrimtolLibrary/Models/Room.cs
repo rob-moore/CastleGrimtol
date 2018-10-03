@@ -1,56 +1,63 @@
-using System;
 using System.Collections.Generic;
 
 namespace GrimtolLibrary.Models
 {
-    public class Room
+    internal class Room
     {
         internal string Name { get; set; }
         internal string Description { get; set; }
-        internal List<Tuple<Exits, Room>> RoomExits { get; set; }
+        internal Dictionary<Exits, Room> RoomExits { get; set; }
+        internal Item Items { get; set; }
 
-        public Room(string name, string desc, List<Tuple<Exits, Room>> exits)
+        internal Room(string name, string desc, Dictionary<Exits, Room> exits, Item item)
         {
             Name = name;
             Description = desc;
             RoomExits = exits;
+            Items = item;
         }
+
     }
 
-    public class RoomFactory
+    internal class RoomFactory
     {
-        public Room CurrentRoom { get; set; }
-
-
-        public void CreateRoom(string roomName)
-        {
-            var Kitchen = new Room("Entryway", "it's a spooky entryway",
-                new List<Tuple<Exits, Room>>(Exits.West, Entryway));
-            
-            var Entryway = new Room(
+        internal Room Entryway { get; set; }
+        internal Room Kitchen { get; set; }
+        internal Room Dungeon { get; set; }
+        internal Room Shower { get; set; }
+        
+        internal void SetupRooms()
+        {   
+             Entryway = new Room(
                 "Entryway",
                 "it's a spooky entryway",
-                new List<Tuple<Exits, Room>>(Exits.East, Kitchen)
-            );
+                new Dictionary<Exits, Room>(),
+                new Item("Cool Sword", "this sword is freaking dope"));
 
-            var Dungeon = new Room("Entryway", "it's a spooky entryway", Exits.East);
+            Kitchen = new Room("Entryway", 
+                "it's a spooky entryway",
+                new Dictionary<Exits, Room>(), null);
             
-            var Shower = new Room("Entryway", "it's a spooky entryway", Exits.East);
-            switch (roomName)
-            {
-                case "entryway":
-                    CurrentRoom = Entryway;
-                    break;
-                case "kitchen":
-                    CurrentRoom = Kitchen;
-                    break;
-                case "Dungeon":
-                    CurrentRoom = Dungeon;
-                    break;
-                case "Shower":
-                    CurrentRoom = Shower;
-                    break;
-            }
+            Dungeon = new Room("Entryway", 
+                "it's a spooky entryway",
+                new Dictionary<Exits, Room>(), null);
+            
+            Shower = new Room("Entryway", 
+                "it's a spooky entryway",
+                new Dictionary<Exits, Room>(), null);
+
+            #region Setup Exits
+            Entryway.RoomExits.Add(Exits.West, Kitchen);
+
+            Kitchen.RoomExits.Add(Exits.East, Entryway);
+            Kitchen.RoomExits.Add(Exits.North, Dungeon);
+            
+            Dungeon.RoomExits.Add(Exits.South, Kitchen);
+            Dungeon.RoomExits.Add(Exits.Down, Shower);
+            
+            Shower.RoomExits.Add(Exits.Up, Dungeon);
+            #endregion
+           
         }
     }
 }
