@@ -3,8 +3,8 @@ namespace GrimtolLibrary.Models
 {
     internal class Item
     {
-        internal string Name { get; set; }
-        internal string Description { get; set; }
+        internal string Name { get; }
+        internal string Description { get; }
 
         internal Item(string name, string desc)
         {

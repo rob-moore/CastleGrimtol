@@ -4,10 +4,10 @@ namespace GrimtolLibrary.Models
 {
     internal class Room
     {
-        internal string Name { get; set; }
-        internal string Description { get; set; }
-        internal Dictionary<Exits, Room> RoomExits { get; set; }
-        internal List<Item> Items { get; set; }
+        internal string Name { get; }
+        internal string Description { get; }
+        internal Dictionary<Exits, Room> RoomExits { get;  }
+        internal List<Item> Items { get; }
 
         internal Room(string name, string desc, Dictionary<Exits, Room> exits, List<Item> item)
         {
@@ -21,10 +21,10 @@ namespace GrimtolLibrary.Models
 
     internal class RoomFactory
     {
-        internal Room Entryway { get; set; }
-        internal Room Kitchen { get; set; }
-        internal Room Dungeon { get; set; }
-        internal Room Shower { get; set; }
+        internal Room Entryway { get; private set; }
+        internal Room Kitchen { get; private set; }
+        internal Room Dungeon { get; private set; }
+        internal Room Shower { get; private set; }
         
         internal void SetupRooms()
         {   
