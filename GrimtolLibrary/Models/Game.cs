@@ -25,6 +25,7 @@ namespace GrimtolLibrary.Models
             var items = new List<string>();
 
             var exits = new List<Exits>();
+            var monsters = new List<string>();
 
             foreach (var exit in CurrentRoom.RoomExits)
             {
@@ -39,15 +40,25 @@ namespace GrimtolLibrary.Models
                 }
             }
 
+            if (CurrentRoom.Monsters != null)
+            {
+                foreach (var i in CurrentRoom.Monsters)
+                {
+                    monsters.Add(i.Name);
+                }
+            }
+
             return CurrentRoom.Name +
                    Environment.NewLine +
                    CurrentRoom.Description +
                    Environment.NewLine +
-                   string.Join("; ", exits) +
+                   string.Join(", ", exits) +
                    Environment.NewLine +
-                   string.Join("; ", items) +
+                   string.Join(", ", items) +
                    Environment.NewLine +
                    "------------------------" +
+                   Environment.NewLine +
+                   "Monsters: " + string.Join(", ", monsters) +
                    Environment.NewLine;
         }
 
@@ -74,14 +85,16 @@ namespace GrimtolLibrary.Models
         {
             switch (helpItem)
             {
-                case "game":
-                    return "It's a cool game. You're welcome for making it";
-                case "life":
-                    return "Stay hydrated and make sure you get enough sleep";
-                case "":
-                    return "What do you need help with? Ask [game], [life] or [nothing]";
+                case "move":
+                    return "syntax: move [direction], go [direction]";
+                case "use":
+                    return "syntax: use [item] [target]";                
+                case "take":
+                    return "syntax: take [item]";                
+                case "look":
+                    return "syntax: look, look [item]";
                 default:
-                    return "Later!";
+                    return "What do you need help with? Ask [move], [use], [take], or [look]";
             }
         }
 
@@ -104,6 +117,27 @@ namespace GrimtolLibrary.Models
             return !CurrentPlayer.Inventory.Any()
                 ? "You're not holding anything"
                 : $"You are currently holding: |{string.Join("; ", items)}|";
+        }
+
+        internal string Use(string item, string target)
+        {
+            switch (target)
+            {
+                case "vampire":
+                case "monster":
+                case "steve":
+                    if(CurrentPlayer.Inventory.Any(x => x.Name.ToLower() != item) || CurrentPlayer.Inventory.Count == 0)
+                        return "You don't have that!";
+                    CurrentRoom.Monsters.Remove(CurrentRoom.Monsters.FirstOrDefault());
+                    CurrentRoom.Items.Add(new Item("Poor Steve's corpse", "What have you done?"));
+                    return "Wow you killed him. He was really nice too.";
+                case "self":
+                case "myself":
+                    GameState = 0;
+                    return "Probably not the best idea";
+                default:
+                    return "What do you want to use?";
+            }
         }
 
         internal string Quit()

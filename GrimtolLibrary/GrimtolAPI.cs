@@ -19,6 +19,7 @@ namespace GrimtolLibrary
         {
             var choices = command.Split(" ");
             string com;
+            string target = "";
             var opt = "";
             var res = "Invalid input";
             switch (choices.Length)
@@ -30,6 +31,11 @@ namespace GrimtolLibrary
                     com = choices[0];
                     opt = choices[1];
                     break;
+                case 3:
+                    com = choices[0];
+                    opt = choices[1];
+                    target = choices[2];
+                    break;
                 default:
                     return res;
                     
@@ -37,6 +43,7 @@ namespace GrimtolLibrary
             switch (com)
             {
                 case "move":
+                case "go":
                     return CurrentGame.Move(opt);
                 case "look":
                 case "l":
@@ -45,6 +52,8 @@ namespace GrimtolLibrary
                     return CurrentGame.Help(opt);
                 case "take":
                     return CurrentGame.Take(opt);
+                case "use":
+                    return CurrentGame.Use(opt, target);
                 case "inventory":
                 case "i" :
                     return CurrentGame.Inventory();
