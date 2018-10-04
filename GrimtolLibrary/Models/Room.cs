@@ -35,15 +35,15 @@ namespace GrimtolLibrary.Models
                 new Item("Cool Sword", "this sword is freaking dope"));
 
             Kitchen = new Room("Entryway", 
-                "it's a spooky entryway",
+                "wow this kitchen is really clean!",
                 new Dictionary<Exits, Room>(), null);
             
             Dungeon = new Room("Entryway", 
-                "it's a spooky entryway",
+                "the dungeon is also pretty clean nice!",
                 new Dictionary<Exits, Room>(), null);
             
             Shower = new Room("Entryway", 
-                "it's a spooky entryway",
+                "why is there a shower here?",
                 new Dictionary<Exits, Room>(), null);
 
             #region Setup Exits

@@ -8,20 +8,18 @@ namespace GrimtolLibrary
     {
         public int GameState { get; set; }
         private Game CurrentGame { get; set; }
+        private Player Player { get; set; }
+        private RoomFactory RoomFactory { get; set; }
         
         public void StartGame()
         {
             CurrentGame = new Game();
+            Player = new Player();
             GameState = 1;
-            var roomFactory = new RoomFactory();
-            roomFactory.SetupRooms();
-            CurrentGame.CurrentRoom = roomFactory.Entryway;
-            Console.WriteLine(CurrentGame.CurrentRoom.Name);
-            Console.WriteLine(CurrentGame.CurrentRoom.Description);
-            foreach (var exit in CurrentGame.CurrentRoom.RoomExits)
-            {
-                Console.WriteLine(exit.Key);
-            }
+            RoomFactory = new RoomFactory();
+            RoomFactory.SetupRooms();
+            CurrentGame.CurrentRoom = RoomFactory.Entryway;
+            Console.WriteLine(CurrentGame.LogCurrentRoom());
         }
 
         public string ProcessCommand(string command)
@@ -53,7 +51,7 @@ namespace GrimtolLibrary
                 case "help":
                     return CurrentGame.Help(opt);
                 case "take":
-                    return "take";
+                    return CurrentGame.Take(opt);
                 case "use":
                     return "use";
                 case "inventory":
