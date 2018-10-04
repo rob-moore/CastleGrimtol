@@ -35,7 +35,7 @@ namespace CastleGrimtol
             Console.WriteLine();
             api.StartGame();
             
-            while (api.GameState.Equals(1))
+            while (api.GetGameState().Equals(1))
             { 
                 Console.WriteLine(api.ProcessCommand(Console.ReadLine()));
             }

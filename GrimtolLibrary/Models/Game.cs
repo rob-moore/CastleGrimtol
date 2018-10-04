@@ -7,13 +7,25 @@ namespace GrimtolLibrary.Models
     internal class Game
     {
         internal Room CurrentRoom { get; set; }
-        internal Player Player { get; set; }
+        internal Player CurrentPlayer { get; set; }
+        internal int GameState { get; set; }
+        internal RoomFactory RoomFactory { get; set; }
+
+        internal void SetupGame()
+        {
+            CurrentPlayer = new Player(new List<Item>());
+            GameState = 1;
+            RoomFactory = new RoomFactory();
+            RoomFactory.SetupRooms();
+            CurrentRoom = RoomFactory.Entryway;
+        }
 
         internal string LogCurrentRoom()
         {
-            string itemName = "";
-            List<Exits> exits = new List<Exits>();
-            
+            var items = new List<string>();
+
+            var exits = new List<Exits>();
+
             foreach (var exit in CurrentRoom.RoomExits)
             {
                 exits.Add(exit.Key);
@@ -21,9 +33,22 @@ namespace GrimtolLibrary.Models
 
             if (CurrentRoom.Items != null)
             {
-                itemName = CurrentRoom.Items.Name;
+                foreach (var i in CurrentRoom.Items)
+                {
+                    items.Add(i.Name);
+                }
             }
-            return $"{CurrentRoom.Name}\n{CurrentRoom.Description}\n{string.Join("; ", exits)}\n{itemName}\n------------------------\n";
+
+            return CurrentRoom.Name +
+                   Environment.NewLine +
+                   CurrentRoom.Description +
+                   Environment.NewLine +
+                   string.Join("; ", exits) +
+                   Environment.NewLine +
+                   string.Join("; ", items) +
+                   Environment.NewLine +
+                   "------------------------" +
+                   Environment.NewLine;
         }
 
         internal string Move(string direction)
@@ -35,21 +60,14 @@ namespace GrimtolLibrary.Models
                 CurrentRoom = newRoom;
                 return LogCurrentRoom();
             }
-            else
-            {
-                return "invalid move";
-            }
+
+            return "invalid move";
         }
 
         internal string Look()
         {
-            Console.WriteLine("You look around the room");
-            return CurrentRoom.Description;
-        }
-
-        internal void LookAt(string item)
-        {
-            throw new System.NotImplementedException();
+            Console.WriteLine("You look around the room:");
+            return LogCurrentRoom();
         }
 
         internal string Help(string helpItem)
@@ -69,27 +87,29 @@ namespace GrimtolLibrary.Models
 
         internal string Take(string item)
         {
-            return $"taking {item}";
+            var selectedItem = CurrentRoom.Items.Single(x => x.Name.ToLower() == item);
+            CurrentPlayer.Inventory.Add(selectedItem);
+            CurrentRoom.Items.Remove(selectedItem);
+            return $"You take {item}";
         }
 
-        internal void Use(string item)
+        internal string Inventory()
         {
-            throw new System.NotImplementedException();
+            var items = new List<string>();
+            foreach (var i in CurrentPlayer.Inventory)
+            {
+                items.Add(i.Name);
+            }
+
+            return !CurrentPlayer.Inventory.Any()
+                ? "You're not holding anything"
+                : $"You are currently holding: |{string.Join("; ", items)}|";
         }
 
-        internal void Inventory()
+        internal string Quit()
         {
-            throw new System.NotImplementedException();
-        }
-
-        internal void Quit()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Restart()
-        {
-            throw new System.NotImplementedException();
+            GameState = 0;
+            return "Bye";
         }
     }
 }

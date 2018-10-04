@@ -7,9 +7,9 @@ namespace GrimtolLibrary.Models
         internal string Name { get; set; }
         internal string Description { get; set; }
         internal Dictionary<Exits, Room> RoomExits { get; set; }
-        internal Item Items { get; set; }
+        internal List<Item> Items { get; set; }
 
-        internal Room(string name, string desc, Dictionary<Exits, Room> exits, Item item)
+        internal Room(string name, string desc, Dictionary<Exits, Room> exits, List<Item> item)
         {
             Name = name;
             Description = desc;
@@ -32,20 +32,26 @@ namespace GrimtolLibrary.Models
                 "Entryway",
                 "it's a spooky entryway",
                 new Dictionary<Exits, Room>(),
-                new Item("Cool Sword", "this sword is freaking dope"));
+                new List<Item>());
 
-            Kitchen = new Room("Entryway", 
+            Kitchen = new Room("Kitchen", 
                 "wow this kitchen is really clean!",
                 new Dictionary<Exits, Room>(), null);
             
-            Dungeon = new Room("Entryway", 
+            Dungeon = new Room("Dungeon", 
                 "the dungeon is also pretty clean nice!",
                 new Dictionary<Exits, Room>(), null);
             
-            Shower = new Room("Entryway", 
+            Shower = new Room("Shower", 
                 "why is there a shower here?",
                 new Dictionary<Exits, Room>(), null);
 
+            #region Setup Items
+            Entryway.Items.Add(new Item("Sword", "this sword is dope"));
+            
+
+            #endregion
+            
             #region Setup Exits
             Entryway.RoomExits.Add(Exits.West, Kitchen);
 

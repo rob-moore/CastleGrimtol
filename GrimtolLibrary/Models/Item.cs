@@ -11,7 +11,6 @@ namespace GrimtolLibrary.Models
             Name = name;
             Description = desc;
         }
-        
-        
+       
     }
 }

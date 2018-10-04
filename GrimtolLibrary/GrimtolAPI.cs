@@ -6,19 +6,12 @@ namespace GrimtolLibrary
 {
     public class GrimtolApi
     {
-        public int GameState { get; set; }
         private Game CurrentGame { get; set; }
-        private Player Player { get; set; }
-        private RoomFactory RoomFactory { get; set; }
         
         public void StartGame()
         {
             CurrentGame = new Game();
-            Player = new Player();
-            GameState = 1;
-            RoomFactory = new RoomFactory();
-            RoomFactory.SetupRooms();
-            CurrentGame.CurrentRoom = RoomFactory.Entryway;
+            CurrentGame.SetupGame();
             Console.WriteLine(CurrentGame.LogCurrentRoom());
         }
 
@@ -52,14 +45,12 @@ namespace GrimtolLibrary
                     return CurrentGame.Help(opt);
                 case "take":
                     return CurrentGame.Take(opt);
-                case "use":
-                    return "use";
                 case "inventory":
-                    return "use";
+                case "i" :
+                    return CurrentGame.Inventory();
                 case "quit":
                 case "q":
-                    
-                    return "bye";
+                    return CurrentGame.Quit();
                case "restart":
                     return "restart";
                default:
@@ -67,9 +58,9 @@ namespace GrimtolLibrary
             }
         }
 
-        public void GetGameState()
+        public int GetGameState()
         {
-            
+            return CurrentGame.GameState;
         }
     }
 }
