@@ -48,18 +48,13 @@ namespace GrimtolLibrary.Models
                 }
             }
 
-            return Environment.NewLine +
-                   CurrentRoom.Name +
-                   Environment.NewLine +
-                   CurrentRoom.Description +
-                   Environment.NewLine +
-                   "Exits: " + string.Join(", ", exits) +
-                   Environment.NewLine +
-                   "Items: " + string.Join(", ", items) +
-                   Environment.NewLine +
-                   "Monsters: " + string.Join(", ", monsters) +
-                   Environment.NewLine +
-                   "------------------------";
+            return
+                $@"|  {CurrentRoom.Name}
+|  {CurrentRoom.Description}
+|  Exits: {string.Join(", ", exits)}
+|  Items: {string.Join(", ", items)}
+|  Monsters: {string.Join(", ", monsters)}
+------------------------------------------";
         }
 
         internal string Move(string direction)
@@ -80,15 +75,15 @@ namespace GrimtolLibrary.Models
             if (item == "")
             {
                 Console.WriteLine("You look around the room:");
-                return LogCurrentRoom();     
+                return LogCurrentRoom();
             }
-            
+
             if (CurrentRoom.Items.Any(x => x.Name.ToLower() == item))
             {
                 var targetItem = CurrentRoom.Items.FirstOrDefault(x => x.Name.ToLower() == item);
                 return $"{targetItem.Name}: {targetItem.Description}";
-            }       
-            
+            }
+
             if (CurrentRoom.Monsters.Any(x => x.Name.ToLower() == item))
             {
                 var targetMonster = CurrentRoom.Monsters.FirstOrDefault(x => x.Name.ToLower() == item);
@@ -96,7 +91,6 @@ namespace GrimtolLibrary.Models
             }
 
             return "You don't see that.";
-
         }
 
         internal string Help(string helpItem)
@@ -106,9 +100,9 @@ namespace GrimtolLibrary.Models
                 case "move":
                     return "syntax: move [direction], go [direction]";
                 case "use":
-                    return "syntax: use [item] [target]";                
+                    return "syntax: use [item] [target]";
                 case "take":
-                    return "syntax: take [item]";                
+                    return "syntax: take [item]";
                 case "look":
                     return "syntax: look, look [item]";
                 default:
@@ -144,7 +138,8 @@ namespace GrimtolLibrary.Models
                 case "vampire":
                 case "monster":
                 case "steve":
-                    if(CurrentPlayer.Inventory.Any(x => x.Name.ToLower() != item) || CurrentPlayer.Inventory.Count == 0)
+                    if (CurrentPlayer.Inventory.Any(x => x.Name.ToLower() != item) ||
+                        CurrentPlayer.Inventory.Count == 0)
                         return "You don't have that!";
                     CurrentRoom.Monsters.Remove(CurrentRoom.Monsters.FirstOrDefault());
                     CurrentRoom.Items.Add(new Item("Corpse", "What have you done?"));

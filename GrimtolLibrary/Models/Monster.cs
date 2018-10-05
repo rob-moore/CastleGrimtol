@@ -1,12 +1,12 @@
 namespace GrimtolLibrary.Models
 {
-    public class Monster
+    internal class Monster
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Health { get; set; }
+        internal string Name { get; set; }
+        internal string Description { get; set; }
+        internal int Health { get; set; }
 
-        public Monster(string name, string desc, int health)
+        internal Monster(string name, string desc, int health)
         {
             Name = name;
             Description = desc;

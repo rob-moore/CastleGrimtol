@@ -8,7 +8,8 @@ namespace GrimtolLibrary.Models
         internal int Health { get; set; } = 100;
         internal List<Item> Inventory { get; set; }
 
-        public Player(List<Item> inv)
+        //TODO: Implement health system
+        internal Player(List<Item> inv)
         {
             Inventory = inv;
         }

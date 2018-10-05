@@ -19,9 +19,9 @@ namespace GrimtolLibrary
         {
             var choices = command.Split(" ");
             string com;
-            string target = "";
+            var target = "";
             var opt = "";
-            var res = "Invalid input";
+            const string res = "Invalid input";
             switch (choices.Length)
             {
                 case 1:
