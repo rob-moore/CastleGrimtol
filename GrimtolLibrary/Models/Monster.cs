@@ -1,10 +1,12 @@
+using GrimtolLibrary.Interfaces;
+
 namespace GrimtolLibrary.Models
 {
-    internal class Monster
+    internal class Monster : IMonster
     {
-        internal string Name { get; set; }
-        internal string Description { get; set; }
-        internal int Health { get; set; }
+        public string Name { get; }
+        public string Description { get; }
+        internal int Health { get; }
 
         internal Monster(string name, string desc, int health)
         {

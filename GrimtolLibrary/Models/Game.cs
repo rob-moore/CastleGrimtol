@@ -1,26 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GrimtolLibrary.Interfaces;
 
 namespace GrimtolLibrary.Models
 {
     internal class Game
     {
-        internal Room CurrentRoom { get; set; }
-        internal Player CurrentPlayer { get; set; }
-        internal int GameState { get; set; }
+        internal IRoom CurrentRoom { get; set; }
+        internal IPlayer CurrentPlayer { get; set; }
+        public int GameState { get; set; }
         internal RoomFactory RoomFactory { get; set; }
 
-        internal void SetupGame()
+        public void SetupGame()
         {
-            CurrentPlayer = new Player(new List<Item>());
+            CurrentPlayer = new Player(new List<IItem>());
             GameState = 1;
             RoomFactory = new RoomFactory();
             RoomFactory.SetupRooms();
             CurrentRoom = RoomFactory.Entryway;
         }
 
-        internal string LogCurrentRoom()
+        public string LogCurrentRoom()
         {
             var items = new List<string>();
 
@@ -49,7 +50,8 @@ namespace GrimtolLibrary.Models
             }
 
             return
-                $@"|  {CurrentRoom.Name}
+                $@"------------------------------------------
+|  {CurrentRoom.Name}
 |  {CurrentRoom.Description}
 |  Exits: {string.Join(", ", exits)}
 |  Items: {string.Join(", ", items)}
@@ -57,7 +59,7 @@ namespace GrimtolLibrary.Models
 ------------------------------------------";
         }
 
-        internal string Move(string direction)
+        public string Move(string direction)
         {
             Enum.TryParse(direction, true, out Exits exit);
             if (CurrentRoom.RoomExits.ContainsKey(exit))
@@ -70,7 +72,7 @@ namespace GrimtolLibrary.Models
             return "invalid move";
         }
 
-        internal string Look(string item = "")
+        public string Look(string item = "")
         {
             if (item == "")
             {
@@ -93,7 +95,7 @@ namespace GrimtolLibrary.Models
             return "You don't see that.";
         }
 
-        internal string Help(string helpItem)
+        public string Help(string helpItem)
         {
             switch (helpItem)
             {
@@ -110,7 +112,7 @@ namespace GrimtolLibrary.Models
             }
         }
 
-        internal string Take(string item)
+        public string Take(string item)
         {
             var selectedItem = CurrentRoom.Items.Single(x => x.Name.ToLower() == item);
             CurrentPlayer.Inventory.Add(selectedItem);
@@ -118,7 +120,7 @@ namespace GrimtolLibrary.Models
             return $"You take {item}";
         }
 
-        internal string Inventory()
+        public string Inventory()
         {
             var items = new List<string>();
             foreach (var i in CurrentPlayer.Inventory)
@@ -131,7 +133,7 @@ namespace GrimtolLibrary.Models
                 : $"You are currently holding: |{string.Join("; ", items)}|";
         }
 
-        internal string Use(string item, string target)
+        public string Use(string item, string target)
         {
             switch (target)
             {
@@ -153,7 +155,7 @@ namespace GrimtolLibrary.Models
             }
         }
 
-        internal string Quit()
+        public string Quit()
         {
             GameState = 0;
             return "Bye";

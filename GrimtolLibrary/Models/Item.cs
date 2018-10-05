@@ -1,16 +1,16 @@
+using GrimtolLibrary.Interfaces;
 
 namespace GrimtolLibrary.Models
 {
-    internal class Item
+    internal class Item : IItem
     {
-        internal string Name { get; }
-        internal string Description { get; }
+        public string Name { get; }
+        public string Description { get; }
 
         internal Item(string name, string desc)
         {
             Name = name;
             Description = desc;
         }
-       
     }
 }

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using GrimtolLibrary.Interfaces;
 using GrimtolLibrary.Models;
 
 namespace GrimtolLibrary
 {
-    public class GrimtolApi
+    public sealed class GrimtolApi
     {
         private Game CurrentGame { get; set; }
-        
+
         public void StartGame()
         {
             CurrentGame = new Game();
@@ -38,8 +39,8 @@ namespace GrimtolLibrary
                     break;
                 default:
                     return res;
-                    
             }
+
             switch (com)
             {
                 case "move":
@@ -55,16 +56,16 @@ namespace GrimtolLibrary
                 case "use":
                     return CurrentGame.Use(opt, target);
                 case "inventory":
-                case "i" :
+                case "i":
                     return CurrentGame.Inventory();
                 case "quit":
                 case "q":
                     return CurrentGame.Quit();
-               case "restart":
-                   StartGame();
-                   return "restart";
-               default:
-                   return res;
+                case "restart":
+                    StartGame();
+                    return "restart";
+                default:
+                    return res;
             }
         }
 

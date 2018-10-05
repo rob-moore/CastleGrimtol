@@ -1,13 +1,12 @@
-    namespace GrimtolLibrary.Models
+namespace GrimtolLibrary.Models
+{
+    public enum Exits
     {
-        internal enum Exits
-        {
-            North,
-            South,
-            East,
-            West,
-            Up,
-            Down
-        }
+        North,
+        South,
+        East,
+        West,
+        Up,
+        Down
     }
-    
+}

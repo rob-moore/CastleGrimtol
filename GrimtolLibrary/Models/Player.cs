@@ -1,18 +1,18 @@
 using System.Collections.Generic;
+using GrimtolLibrary.Interfaces;
 
 namespace GrimtolLibrary.Models
 {
-    internal class Player
+    internal class Player : IPlayer
     {
-        internal string Name { get; set; }
+        public string Name { get; }
+        public List<IItem> Inventory { get; }
         internal int Health { get; set; } = 100;
-        internal List<Item> Inventory { get; set; }
 
         //TODO: Implement health system
-        internal Player(List<Item> inv)
+        internal Player(List<IItem> inv)
         {
             Inventory = inv;
         }
     }
-    
 }
