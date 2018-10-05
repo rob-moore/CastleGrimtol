@@ -48,7 +48,8 @@ namespace GrimtolLibrary.Models
                 }
             }
 
-            return CurrentRoom.Name +
+            return Environment.NewLine +
+                   CurrentRoom.Name +
                    Environment.NewLine +
                    CurrentRoom.Description +
                    Environment.NewLine +
@@ -58,8 +59,7 @@ namespace GrimtolLibrary.Models
                    Environment.NewLine +
                    "Monsters: " + string.Join(", ", monsters) +
                    Environment.NewLine +
-                   "------------------------" +
-                   Environment.NewLine;
+                   "------------------------";
         }
 
         internal string Move(string direction)
