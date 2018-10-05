@@ -47,7 +47,7 @@ namespace GrimtolLibrary
                     return CurrentGame.Move(opt);
                 case "look":
                 case "l":
-                    return CurrentGame.Look();
+                    return CurrentGame.Look(opt);
                 case "help":
                     return CurrentGame.Help(opt);
                 case "take":
@@ -61,7 +61,8 @@ namespace GrimtolLibrary
                 case "q":
                     return CurrentGame.Quit();
                case "restart":
-                    return "restart";
+                   StartGame();
+                   return "restart";
                default:
                    return res;
             }

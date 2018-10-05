@@ -50,7 +50,7 @@ namespace GrimtolLibrary.Models
                 new Dictionary<Exits, Room>(), new List<Item>(), new List<Monster>());
 
             #region Setup Items
-            Entryway.Items.Add(new Item("Sword", "this sword is dope"));
+            Entryway.Items.Add(new Item("Sword", "This sword is dope."));
             
 
             #endregion
@@ -68,7 +68,7 @@ namespace GrimtolLibrary.Models
             #endregion
 
             #region Setup Monsters
-                Kitchen.Monsters.Add(new Monster("Vampire Steve", "He's a nice look vampire.", 10));
+                Kitchen.Monsters.Add(new Monster("Vampire", "He's a nice looking vampire. His name is Steve.", 10));
            
             #endregion
         }

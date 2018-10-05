@@ -52,13 +52,13 @@ namespace GrimtolLibrary.Models
                    Environment.NewLine +
                    CurrentRoom.Description +
                    Environment.NewLine +
-                   string.Join(", ", exits) +
+                   "Exits: " + string.Join(", ", exits) +
                    Environment.NewLine +
-                   string.Join(", ", items) +
-                   Environment.NewLine +
-                   "------------------------" +
+                   "Items: " + string.Join(", ", items) +
                    Environment.NewLine +
                    "Monsters: " + string.Join(", ", monsters) +
+                   Environment.NewLine +
+                   "------------------------" +
                    Environment.NewLine;
         }
 
@@ -75,10 +75,28 @@ namespace GrimtolLibrary.Models
             return "invalid move";
         }
 
-        internal string Look()
+        internal string Look(string item = "")
         {
-            Console.WriteLine("You look around the room:");
-            return LogCurrentRoom();
+            if (item == "")
+            {
+                Console.WriteLine("You look around the room:");
+                return LogCurrentRoom();     
+            }
+            
+            if (CurrentRoom.Items.Any(x => x.Name.ToLower() == item))
+            {
+                var targetItem = CurrentRoom.Items.FirstOrDefault(x => x.Name.ToLower() == item);
+                return $"{targetItem.Name}: {targetItem.Description}";
+            }       
+            
+            if (CurrentRoom.Monsters.Any(x => x.Name.ToLower() == item))
+            {
+                var targetMonster = CurrentRoom.Monsters.FirstOrDefault(x => x.Name.ToLower() == item);
+                return $"{targetMonster.Name}: {targetMonster.Description}";
+            }
+
+            return "You don't see that.";
+
         }
 
         internal string Help(string helpItem)
@@ -129,7 +147,7 @@ namespace GrimtolLibrary.Models
                     if(CurrentPlayer.Inventory.Any(x => x.Name.ToLower() != item) || CurrentPlayer.Inventory.Count == 0)
                         return "You don't have that!";
                     CurrentRoom.Monsters.Remove(CurrentRoom.Monsters.FirstOrDefault());
-                    CurrentRoom.Items.Add(new Item("Poor Steve's corpse", "What have you done?"));
+                    CurrentRoom.Items.Add(new Item("Corpse", "What have you done?"));
                     return "Wow you killed him. He was really nice too.";
                 case "self":
                 case "myself":
